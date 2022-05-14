@@ -1,0 +1,223 @@
+﻿<Window x:Class="MT5SignalReceiver.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MT5SignalReceiver"
+        xmlns:converters="clr-namespace:MT5SignalReceiver.ValueConverters"
+        mc:Ignorable="d" WindowState="Maximized"
+        Title="MT5 Signal Receiver" Height="550" Width="800"
+         DataContext="{Binding Main, Source={StaticResource Locator}}"
+          Style="{DynamicResource FlatWindowStyle}"
+        >
+    <Window.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="10*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="5" />
+                <RowDefinition Height="4*" x:Name="RowSignal"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderThickness="1" Margin="5,5,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+
+                        <Border BorderThickness="0,0,0,1">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Center"  Margin="2">Strategy:</TextBlock>
+                                <ComboBox MinWidth="100"  Margin="2" Padding="0,0,20,0" Grid.Column="1" ItemsSource="{Binding Strategys,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Main.SelectedStrategy,UpdateSourceTrigger=PropertyChanged, Source={StaticResource Locator}}" />
+                                <TextBlock VerticalAlignment="Center"  Margin="5,2,2,2" Grid.Column="2" >Asset:</TextBlock>
+                                <Button Grid.Column="3" Margin="2,2,0,2" Padding="0"  Command="{Binding BackAssetChartCommand}" FontWeight="Bold" FontSize="14">
+                                    <Image Width="22" Height="22" Source="Resources/back-asset.png"/>
+                                </Button>
+                                <ComboBox MinWidth="150"  Margin="0,2" Grid.Column="4" ItemsSource="{Binding ChartAssets,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedChartAsset,UpdateSourceTrigger=PropertyChanged}" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox VerticalAlignment="Center"  IsChecked="{Binding AllowToReciveSignal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                <TextBlock VerticalAlignment="Center" Grid.Column="1"  Margin="2" MinWidth="50" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}" />
+                                                <TextBlock VerticalAlignment="Center" Grid.Column="2"  Margin="2" MinWidth="20" Text="{Binding TimeFrame,UpdateSourceTrigger=PropertyChanged}" />
+                                                <TextBlock VerticalAlignment="Center"  Margin="2,2,0,2" Grid.Column="3"  Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Margin="0,2"  Grid.Column="4" Text="{Binding SignalCount,UpdateSourceTrigger=PropertyChanged}" />
+                                                <TextBlock VerticalAlignment="Center" Margin="0,2"  Grid.Column="5" Text=")" />
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+
+                                </ComboBox>
+                                <Button Grid.Column="5" Margin="0,2,2,2" Padding="0" Command="{Binding NextAssetChartCommand}" FontWeight="Bold" FontSize="14">
+                                    <Image Width="22" Height="22" Source="Resources/next-asset.png"/>
+                                </Button>
+                                <Button Grid.Column="6" Margin="0,2,2,2"  Command="{Binding StartCommand}" >
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Image Width="16" Height="16" VerticalAlignment="Center" Source="{Binding StartIconSource,UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding StartText,UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                   
+                                </Button>
+                                <Button Grid.Column="7" Margin="2" Command="{Binding AboutCommand}" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Image Width="16" Height="16" VerticalAlignment="Center" Source="Resources\info.png"/>
+                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="About" />
+                                    </StackPanel>
+
+                                </Button>
+                            </Grid>
+                        </Border>
+                        <Border   Grid.Row="1" BorderThickness="1" BorderBrush="Black" >
+                            <local:ChartViewer  x:Name="ChartViewer" IsChartLoading="{Binding IsChartLoading,UpdateSourceTrigger=PropertyChanged}"  ChartAsset="{Binding SelectedChartAsset,UpdateSourceTrigger=PropertyChanged}" ScreenShotSource="{Binding ScreenShotSource,UpdateSourceTrigger=PropertyChanged}"      />
+                            
+
+                        </Border>
+
+                    </Grid>
+
+                    <Button Grid.Row="1" Padding="0"  Margin="-2,0,-2,-2" Command="{Binding ExpendSignalSectionCommand}" >
+                        <Image Width="16" Height="16" Source="Resources/up-down.png"/>
+                    </Button>
+                </Grid>
+
+            </Border>
+
+            <GridSplitter    
+                      Grid.Row="1"  Height="5"
+                      VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+            <Border BorderThickness="1"  Margin="5,0,0,0" Grid.Row="2"   >
+                <Grid>
+                    <DataGrid  
+                                ItemsSource="{Binding Items}"
+                                AutoGenerateColumns="False" SelectionMode="Single"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False" CanUserResizeRows="False" 
+                                HorizontalScrollBarVisibility="Auto" 
+                                VerticalScrollBarVisibility="Auto" 
+                                   SelectedItem="{Binding SelectedSignal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                >
+
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn CanUserResize="False"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid Background="{Binding Background,UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn CanUserResize="False"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="View Chart" Command="{Binding Main.ViewChartCommand, Source={StaticResource Locator}}" 
+                                         CommandParameter="{Binding}" Margin="2"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn CanUserResize="False"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button ToolTip="Remove Signal" Command="{Binding Main.RemoveItemCommand, Source={StaticResource Locator}}" 
+                                CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" >
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Image Source="Resources/remove.png" Height="16" Width="16" />
+                                                </ControlTemplate>
+
+                                            </Button.Template>
+
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Button ToolTip="Clear Signal List" Command="{Binding Main.ClearItemsCommand, Source={StaticResource Locator}}" 
+                                CommandParameter="{Binding}" Background="Transparent" BorderThickness="0">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Image Source="Resources/remove.png" Height="16" Width="16" />
+                                                </ControlTemplate>
+
+                                            </Button.Template>
+
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Strategy" Binding="{Binding StrategyName}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Asset" Binding="{Binding ChartAsset.Name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Start Time" Binding="{Binding Date, StringFormat=\{0:HH:mm:ss\}}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Elapsed Time" Binding="{Binding ElapsedTime,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Timeframe" Binding="{Binding ChartAsset.TimeFrame,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Trade Action" Binding="{Binding TradeAction,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+            <Border Grid.Row="3" BorderThickness="1,0,1,1" Margin="5,0,0,5" >
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  Margin="2"  >Status:</TextBlock>
+                    <TextBlock Margin="2" Foreground="{Binding StatusColor}" Grid.Column="1" Text="{Binding Status,UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Margin="0,2" Foreground="{Binding StatusColor}"  Grid.Column="2" Text="{Binding StatusElapsedTimeToShow,UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Border Grid.Column="2"  Margin="0,5,5,5" >
+            <local:WebBrowser x:Name="WebBrowser" />
+        </Border>
+
+        <GridSplitter  
+                      Grid.Column="1" Grid.RowSpan="3" Width="5"
+                      HorizontalAlignment="Stretch"/>
+    </Grid>
+
+
+</Window>

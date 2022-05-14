@@ -1,0 +1,40 @@
+﻿<Window x:Class="MT5SignalReceiver.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MT5SignalReceiver"
+        mc:Ignorable="d"
+         Foreground="Black"
+        Title="About" Height="334.543" Width="595.864" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" Deactivated="Window_Deactivated" KeyUp="Window_KeyUp" >
+    <Grid >
+
+        <Image  Source="Resources\about.jpg"  />
+
+        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="HASSAN ALLAHYARI"  HorizontalAlignment="Left"  FontWeight="Thin" FontSize="20"    />
+
+            <TextBlock Grid.Row="1" Text="MT5 SIGNAL RECEIVER"  VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="22" FontWeight="Thin"    />
+            <TextBlock Grid.Row="2" Text="HASSAN . ALLAHYARI1988@GMAIL . COM" Margin="0,10,0,0"  VerticalAlignment="Center" FontSize="9"   FontWeight="Medium"  />
+
+            <Grid  Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="0,2,0,0"  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Image Source="Resources\heart.png" Width="14" Height="14"/>
+                <TextBlock  Grid.Column="1" Text="+989036616325 +989058599597" VerticalAlignment="Center" FontWeight="Medium" FontSize="9"   Margin="2,0,0,0"  />
+
+            </Grid>
+        </Grid>
+
+
+    </Grid>
+</Window>

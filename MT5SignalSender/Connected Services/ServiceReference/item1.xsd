@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SendSignal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="strategyName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="asset" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="assetDescripion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="timeFrame" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="isCall" type="xs:boolean" />
+        <xs:element minOccurs="0" name="screenShotFilePath" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="chartForeground" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendSignalResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StrategyAddedOnChart">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="strategyName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="asset" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="assetDescripion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="timeFrame" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="screenShotFilePath" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="chartForeground" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StrategyAddedOnChartResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
